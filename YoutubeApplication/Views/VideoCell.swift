@@ -12,24 +12,24 @@ class VideoCell: BaseCell {
     
     var video: Video? {
         didSet {
-            titleVideo.text = video?.titleVideo
+            titleVideo.text = video?.title
             
             setupThumbnailImage()
             
             setupImageChannel()
             
-            if let chName = video?.channel?.name, let nmViews = video?.numberViews {
+            if let chName = video?.channel?.name, let nmViews = video?.number_of_views {
                 let numFormater = NumberFormatter()
                 numFormater.numberStyle = .decimal
                 
                 if let decimalViews = numFormater.string(from: nmViews) {
-                    let subTitle = "\(chName) - \(decimalViews) - \(String(describing: video?.createAt))"
+                    let subTitle = "\(chName) - \(decimalViews) views - 2 years ago"
                     descVideo.text = subTitle
                 }
             }
             
             //measure the title
-            if let titVideo = video?.titleVideo {
+            if let titVideo = video?.title {
                 let size = CGSize(width: frame.width - 16 - 44 - 8 - 16, height: 1000)
                 let option = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
                 let estimate = NSString(string: titVideo).boundingRect(with: size, options: option, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)], context: nil)
@@ -44,13 +44,13 @@ class VideoCell: BaseCell {
     }
     
     func setupThumbnailImage() {
-        if let imgURl = video?.thumbnailImage {
-            thumbnailImageView.loadImageFromUrl(urlString: imgURl )
+        if let imgURl = video?.thumbnail_image_name {
+            thumbnailImageView.loadImageFromUrl(urlString: imgURl)
         }
     }
     
     func setupImageChannel() {
-        if let imgUrl = video?.channel?.imageChannel {
+        if let imgUrl = video?.channel?.profile_image_name {
             userProfile.loadImageFromUrl(urlString: imgUrl)
         }
     }

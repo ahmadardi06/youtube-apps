@@ -11,6 +11,10 @@
 		FA7116D3214CC16B00B910DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7116D2214CC16B00B910DD /* AppDelegate.swift */; };
 		FA7116D5214CC6D100B910DD /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7116D4214CC6D100B910DD /* SettingCell.swift */; };
 		FA7116D8214D22CE00B910DD /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7116D7214D22CE00B910DD /* ApiService.swift */; };
+		FAEA3BD0214F37AD0024A4A6 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA3BCF214F37AD0024A4A6 /* FeedCell.swift */; };
+		FAEA3BD2214F40A50024A4A6 /* TrendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA3BD1214F40A50024A4A6 /* TrendingCell.swift */; };
+		FAEA3BD4214F43040024A4A6 /* DiscountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA3BD3214F43040024A4A6 /* DiscountCell.swift */; };
+		FAEA3BD6214F6A7F0024A4A6 /* SafeJsonObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA3BD5214F6A7F0024A4A6 /* SafeJsonObject.swift */; };
 		FAEC00D7214BD7DB0008D933 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC00D6214BD7DB0008D933 /* BaseCell.swift */; };
 		FAEC00D9214BD8590008D933 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC00D8214BD8590008D933 /* MenuCell.swift */; };
 		FAEC00DD214BEFF60008D933 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC00DC214BEFF60008D933 /* Video.swift */; };
@@ -28,6 +32,10 @@
 		FA7116D2214CC16B00B910DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA7116D4214CC6D100B910DD /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		FA7116D7214D22CE00B910DD /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		FAEA3BCF214F37AD0024A4A6 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		FAEA3BD1214F40A50024A4A6 /* TrendingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingCell.swift; sourceTree = "<group>"; };
+		FAEA3BD3214F43040024A4A6 /* DiscountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountCell.swift; sourceTree = "<group>"; };
+		FAEA3BD5214F6A7F0024A4A6 /* SafeJsonObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeJsonObject.swift; sourceTree = "<group>"; };
 		FAEC00D6214BD7DB0008D933 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		FAEC00D8214BD8590008D933 /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		FAEC00DC214BEFF60008D933 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
@@ -106,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				FAF4B7B5214A6BFA001761E5 /* Extension.swift */,
+				FAEA3BD5214F6A7F0024A4A6 /* SafeJsonObject.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -118,6 +127,9 @@
 				FAEC00D6214BD7DB0008D933 /* BaseCell.swift */,
 				FAEC00D8214BD8590008D933 /* MenuCell.swift */,
 				FA7116D4214CC6D100B910DD /* SettingCell.swift */,
+				FAEA3BCF214F37AD0024A4A6 /* FeedCell.swift */,
+				FAEA3BD1214F40A50024A4A6 /* TrendingCell.swift */,
+				FAEA3BD3214F43040024A4A6 /* DiscountCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -207,12 +219,16 @@
 				FA7116D1214CBCDA00B910DD /* SettingsLauncher.swift in Sources */,
 				FA7116D3214CC16B00B910DD /* AppDelegate.swift in Sources */,
 				FAF4B7B9214A6C91001761E5 /* VideoCell.swift in Sources */,
+				FAEA3BD0214F37AD0024A4A6 /* FeedCell.swift in Sources */,
 				FAF4B7A5214A46DC001761E5 /* HomeController.swift in Sources */,
 				FA7116D8214D22CE00B910DD /* ApiService.swift in Sources */,
 				FAEC00DD214BEFF60008D933 /* Video.swift in Sources */,
 				FAEC00D7214BD7DB0008D933 /* BaseCell.swift in Sources */,
+				FAEA3BD4214F43040024A4A6 /* DiscountCell.swift in Sources */,
 				FA7116D5214CC6D100B910DD /* SettingCell.swift in Sources */,
+				FAEA3BD2214F40A50024A4A6 /* TrendingCell.swift in Sources */,
 				FAF4B7BD214A6E2E001761E5 /* MenuBar.swift in Sources */,
+				FAEA3BD6214F6A7F0024A4A6 /* SafeJsonObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

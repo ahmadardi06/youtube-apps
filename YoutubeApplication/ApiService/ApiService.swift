@@ -11,10 +11,10 @@ import UIKit
 class ApiService: NSObject {
     
     static let sharedInstance = ApiService()
+    let baseUrl = "https://s3-us-west-2.amazonaws.com/youtubeassets/"
     
-    func fetchVideos(completion: @escaping ([Video]) -> ()) {
-         
-        let url = URL(string: "https://s3-us-west-2.amazonaws.com/youtubeassets/home.json")
+    func fetchFromUrlString(urlString: String, completion: @escaping ([Video]) -> ()) {
+        let url = URL(string: urlString)
         
         URLSession.shared.dataTask(with: url!, completionHandler: {(data, response, error) in
             if error != nil {
@@ -23,30 +23,16 @@ class ApiService: NSObject {
             }
             
             do {
-                let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-                
-                var videos = [Video]()
-                
-                for item in json as! [[String: AnyObject]] {
+                if let unwrappedData = data, let itemDictionaries = try JSONSerialization.jsonObject(with: unwrappedData, options: .mutableContainers) as? [[String: AnyObject ]] {
                     
-                    let vid = Video()
-                    vid.titleVideo = item["title"] as? String
-                    vid.thumbnailImage = item["thumbnail_image_name"] as? String
-                    vid.numberViews = item["number_of_views"] as? NSNumber
+                    let videoss = itemDictionaries.map({ (item) in
+                        return Video(dictionary: item)
+                    })
                     
-                    let chnItem = item["channel"] as! [String: AnyObject]
+                    DispatchQueue.main.async {
+                        completion(videoss )
+                    }
                     
-                    let chn = Channel()
-                    chn.name = chnItem["name"] as? String
-                    chn.imageChannel = chnItem["profile_image_name"] as? String
-                    
-                    vid.channel = chn
-                    
-                    videos.append(vid)
-                }
-                
-                DispatchQueue.main.async {
-                    completion(videos) 
                 }
                 
             } catch let errJson {
@@ -54,5 +40,32 @@ class ApiService: NSObject {
             }
             
         }).resume()
+    }
+    
+    func fetchVideos(completion: @escaping ([Video]) -> ()) {
+        
+//        let stringUrl = "home.json"
+        let stringUrl = "home_num_likes.json"
+        fetchFromUrlString(urlString: baseUrl+stringUrl) { (videos) in
+            completion(videos)
+        }
+        
+    }
+    
+    func fetchTrending(completion: @escaping ([Video]) -> ()) {
+        
+        let stringUrl = "trending.json"
+        fetchFromUrlString(urlString: baseUrl+stringUrl) { (videos) in
+            completion(videos)
+        }
+    }
+    
+    func fetchDiscount(completion: @escaping ([Video]) -> ()) {
+        
+        let stringUrl = "subscriptions.json"
+        fetchFromUrlString(urlString: baseUrl+stringUrl) { (videos) in
+            completion(videos)
+        }
+        
     }
 }

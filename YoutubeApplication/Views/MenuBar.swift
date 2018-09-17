@@ -66,7 +66,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
 //        }, completion: nil)
         
         homeController?.scrollToViewIndex(menuIndex: indexPath.item)
-
+        homeController?.setTitleMenuBar(menuIndex: indexPath.item)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -75,7 +75,6 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MenuCell
-        
         
         cell.imageView.image = UIImage(named: iconMenu[indexPath.item])?.withRenderingMode(.alwaysTemplate)
         cell.tintColor = UIColor.rgb(red: 91, green: 14, blue: 13)

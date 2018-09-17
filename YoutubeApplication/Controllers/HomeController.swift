@@ -10,19 +10,27 @@ import UIKit
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var videos: [Video]?
+    let cellId = "cellId"
+    let trendingCell = "trendingCell"
+    let discountCell = "discountCell"
+    let accountCell = "accountCell"
     
-    func setupDataApi() {
-        ApiService.sharedInstance.fetchVideos { (videos: [Video]) in
-            self.videos = videos
-            self.collectionView?.reloadData()
-        }
-    }
+    let titleMenu = ["YouTube","Trending","Discount","Account"]
+    
+    lazy var menuBar: MenuBar = {
+        let mb = MenuBar()
+        mb.homeController = self
+        return mb
+    }()
+    
+    lazy var setLaunch: SettingsLauncher = {
+        let launcher = SettingsLauncher()
+        launcher.homeController = self
+        return launcher
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupDataApi()
         
         navigationController?.navigationBar.isTranslucent = false
         
@@ -37,14 +45,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         setupCollectionView()
     }
     
-    lazy var menuBar: MenuBar = {
-        let mb = MenuBar()
-        mb.homeController = self
-        return mb
-    }()
-    
-    let cellId = "cellId"
-    
     func setupCollectionView() {
         
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -53,36 +53,15 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         
         collectionView?.backgroundColor = UIColor.white
-//        collectionView?.register(VideoCell.self, forCellWithReuseIdentifier: "cellId")
+        collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(TrendingCell .self, forCellWithReuseIdentifier: trendingCell)
+        collectionView?.register(DiscountCell .self, forCellWithReuseIdentifier: discountCell)
         
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.isPagingEnabled = true
         
         // membatasi untuk scroll bawahnya menu bar atas
         collectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        
-        let colorBg: [UIColor] = [UIColor.blue, UIColor.green, UIColor.yellow , UIColor.brown]
-        cell.backgroundColor = colorBg[indexPath.item]
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
-    }
-    
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let getValueX = scrollView.contentOffset.x
-        menuBar.awalHorizontalView?.constant = getValueX / 4
     }
     
     private func setupMenuBar() {
@@ -111,12 +90,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         navigationItem.rightBarButtonItems = [navbarRightSearch, navbarRightMore]
     }
     
-    lazy var setLaunch: SettingsLauncher = {
-        let launcher = SettingsLauncher()
-        launcher.homeController = self
-        return launcher
-    }()
-    
     @objc func handleUsers() {
         setLaunch.showHandleUsers()
     }
@@ -126,7 +99,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     @objc func scrollToViewIndex(menuIndex: Int) {
-        print(menuIndex)
         let indexPath = IndexPath(item: menuIndex, section: 0)
         collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
     }
@@ -135,6 +107,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let hasilBagi = targetContentOffset.pointee.x / view.frame.width
         let indexPath = IndexPath(item: Int(hasilBagi), section: 0)
         menuBar.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+        
+        setTitleMenuBar(menuIndex: Int(hasilBagi))
     }
     
     @objc func showControllerForSetting(setting: Setting) {
@@ -148,25 +122,44 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
     }
     
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return videos?.count ?? 0
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! VideoCell
-//
-//        cell.video = videos? [indexPath.item]
-//
-//        return cell
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let height = (view.frame.width - 16 - 16) * 9 / 16
-//        return CGSize(width: view.frame.width, height: height + 16 + 88)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
+    @objc func setTitleMenuBar(menuIndex: Int) {
+        let title = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 32, height: view.frame.height))
+        title.text = "  \(titleMenu[menuIndex])"
+        title.textColor = UIColor.white
+        title.font = UIFont.systemFont(ofSize: 20)
+        navigationItem.titleView = title
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let identifierId: String
+        
+        if indexPath.item == 1 {
+            identifierId = trendingCell
+        }
+        else if indexPath.item == 2 {
+            identifierId = discountCell
+        }
+        else {
+            identifierId = cellId
+        }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifierId, for: indexPath)
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height - 50)
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let getValueX = scrollView.contentOffset.x
+        menuBar.awalHorizontalView?.constant = getValueX / 4
+    }
 
 }
